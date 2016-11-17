@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask,request,g,Response,jsonify
+from flask import Flask,request,Response,jsonify,render_template
 import mysql.connector
 import sys,os,urlparse,json,re
 from mysql_connection import database_name
@@ -61,20 +61,19 @@ def search(URL):
     Malware = cursor.fetchone()[0]
   except mysql.connector.errors.Error as err:
     data = dict(Error="{}".format(err) )
-     resp = jsonify(data)
+    resp = jsonify(data)
     return resp
 
   #cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}'".format(new_URL)''')
   #Malware = cursor.fetchone()[0]
   if not Malware:
-    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen on {}.format(new_URL)")
+    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen Redirected you on .... {}".format(new_URL))
     resp= jsonify(data)
-    return resp    
+    return resp ,render_template('welcome.html')   
   else:
-    data = dict(Current_status = "Dangerous Site",Recent_activity = "Malicious content seen on {}.format(new_URL)")
+    data = dict(Current_status = "Dangerous Site",Recent_activity = "Malicious content seen on {}".format(new_URL))
     resp= jsonify(data)
     return resp
-
   
 if __name__ == "__main__":
   app.run(debug=True)
