@@ -14,15 +14,7 @@ def not_found(error=None):
     message = dict(status= 404,message= 'Not Found: ' + request.url,)
     resp = jsonify(message)
     resp.status_code = 404
-    return resp
-
-#def URL_strip():
- # {
-
-
-
-
-#} 
+    return resp 
 
 @app.route('/urlinfo/1/<path:URL>', methods=['GET'])
 def search(URL):
@@ -47,14 +39,16 @@ def search(URL):
         r'(?::\d+)?'  # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     
-     if  url is not None and  regex.search(url):
+     if URL is not None and  regex.search(URL):
        pass  
      else:
        data=dict(Invalid_URL_Format="Please see Readme for valid Url format")
        resp = jsonify(data)
        return resp
      
-     #domain=URL_strip(URL)
+     #Strip http(s) and www from url
+     URL=URL.strip(r'http(s://?)|www\d?.')
+
      
      
   
