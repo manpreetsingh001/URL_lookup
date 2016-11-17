@@ -2,7 +2,7 @@
 '''Script for populating malware URLs' in MYSQL database 
    This script need to br run first to create a database
 '''
-import json,sys,logging
+import sys,logging
 import mysql.connector
 from mysql_connection import database_name
 from mysql_connection import TB_name
@@ -12,7 +12,7 @@ def create_db(cursor):                        #Database creation
   try:
     query = '''CREATE DATABASE IF NOT EXISTS {0}'''.format(database_name)
     cursor.execute(query)
-    print {"Database malicious": "is created"}
+    print {"Database  name malicious": "is created"}
 
   except mysql.connector.errors.Error as err:
     data = {"Issue in creating database": "Error:{}".format(err)}
@@ -24,7 +24,7 @@ def create_TB(cursor,connection):             #Creating a table
     query = '''CREATE TABLE {}(malicious VARCHAR(100) NOT NULL)'''.format(TB_name)
     cursor.execute(query)
     connection.commit()
-    data = {"Table URLlookup": "is successfully created"}
+    data = {"Table name URLlookup": "is successfully created"}
     print data
 
   except mysql.connector.errors.Error as err:
@@ -33,7 +33,7 @@ def create_TB(cursor,connection):             #Creating a table
 
 def insert_data(url,cursor,conn):             #Insert URL from txt file into database
   try:
-    cursor.exedcute('''INSERT INTO URLlookup (malicious) VALUES ("{0}")'''.format(url))
+    cursor.execute('''INSERT INTO URLlookup (malicious) VALUES ("{0}")'''.format(url))
     conn.commit()
   
   except mysql.connector.errors.Error as err:
