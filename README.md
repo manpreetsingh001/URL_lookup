@@ -11,29 +11,34 @@ The GET requests would look like this:
 - database_update.py populate database with data from malicious_url.txt
 
 **How to use:** 
-   *Requirements*
+   
+  *Requirements*
    - mysql.connector for python
    - flask for python
    - Virtual env would be preferable for running app
    - mysql server
    - python
 
+  
    *How to run*:
    - Clone the directory and move to directory
    - python database_update.py -This will going to populate the data
    - Then run python URL_lookup.py -This will going to start local web server
    - From your work station run **curl  http://127.0.0.1:5000/urlinfo/1/<<http://domain.com>>
       some of the acceptable formats are:
-      ```
-          http://www.google.com         #Valid
-          http://google.com             #Invalid
-          www.google                    #Invalid 
-          http://www.google.com/images  #Valid
-      ```
-    > Version control plan:Going to use Tags for versoning and topic branches for adding features
-    > Going to write unittest for it using python mock library
-    > Dockerize  app to remove dependencies 
-    > Bonus Tasks    
+      
+         *http://www.google.com*         #Valid
+         
+         *http://google.com*             #Invalid
+          
+         *www.google*                    #Invalid 
+         
+         *http://www.google.com/images*  #Valid
+    
+   - [] Version control plan:Going to use Tags for versoning and topic branches for adding features
+   - [] Going to write unittest for it using python mock library
+   - [] Dockerize  app to remove dependencies 
+   - [] Bonus Tasks    
 
  
 
