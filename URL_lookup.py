@@ -67,9 +67,9 @@ def search(URL):
   #cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}'".format(new_URL)''')
   #Malware = cursor.fetchone()[0]
   if not Malware:
-    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen Redirected you on .... {}".format(new_URL))
+    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen Redirecting you on .... {}".format(new_URL))
     resp= jsonify(data)
-    return resp ,render_template('welcome.html')   
+    return resp 
   else:
     data = dict(Current_status = "Dangerous Site",Recent_activity = "Malicious content seen on {}".format(new_URL))
     resp= jsonify(data)
