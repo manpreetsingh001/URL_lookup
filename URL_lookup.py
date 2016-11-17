@@ -40,20 +40,41 @@ def search(URL):
       r'(?:/?|[/?]\S+)$', re.IGNORECASE)
     
   if URL is not None and  regex.search(URL):
-     pass  
+    #Strip http(s) and www from url
+    reg = re.compile(r"https?://(www\.)?")
+    new_URL = reg.sub('', URL).strip().strip('/') 
   else:
-     data=dict(Invalid_URL_Format="Please see Readme for valid Url formati and don't forget to add http://")
-     resp = jsonify(data)
-     return resp
-     
-  #Strip http(s) and www from url
-  reg = re.compile(r"https?://(www\.)?")
-  new_URL=reg.sub('', URL).strip().strip('/')
+    data = dict(Invalid_URL_Format="Please Enter a valid URL format like http://www.google.com")
+    resp = jsonify(data)
+    return resp
 
+  #Strip http(s) and www from url
+  #reg = re.compile(r"https?://(www\.)?")
+  #new_URL=reg.sub('', URL).strip().strip('/')
  
-  #print new_URL
-  return new_URL     
-     
+  #search database for malicious URL
+  try:
+    cnx = mysql.connector.connect(**config)
+    cursor = cnx.cursor()
+    cnx.database = database_name
+    cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}' '''.format(new_URL))
+    Malware = cursor.fetchone()[0]
+  except mysql.connector.errors.Error as err:
+    data = dict(Error="{}".format(err) )
+     resp = jsonify(data)
+    return resp
+
+  #cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}'".format(new_URL)''')
+  #Malware = cursor.fetchone()[0]
+  if not Malware:
+    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen on {}.format(new_URL)")
+    resp= jsonify(data)
+    return resp    
+  else:
+    data = dict(Current_status = "Dangerous Site",Recent_activity = "Malicious content seen on {}.format(new_URL)")
+    resp= jsonify(data)
+    return resp
+
   
 if __name__ == "__main__":
   app.run(debug=True)
