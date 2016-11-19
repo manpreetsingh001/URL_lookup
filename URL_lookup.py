@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from flask import Flask,request,Response,jsonify,render_template
-import mysql.connector
-import sys,os,urlparse,json,re
+from flask import Flask,request,Response,jsonify
+import mysql.connector,json
+import sys,urlparse,json,re
 from mysql_connection import database_name
 from mysql_connection import TB_name
 from mysql_connection import config  
@@ -12,7 +12,7 @@ app = Flask(__name__)
 @app.errorhandler(404)                                        #Error handling  for wrong URL input
 def not_found(error=None):
     message = dict(status= 404,message= 'Not Found: ' + request.url,)
-    resp = jsonify(message)
+    resp = json.dumps(message)
     resp.status_code = 404
     return resp 
 
@@ -44,8 +44,8 @@ def search(URL):
     reg = re.compile(r"https?://(www\.)?")
     new_URL = reg.sub('', URL).strip().strip('/') 
   else:
-    data = dict(Invalid_URL_Format="Please Enter a valid URL format like http://www.google.com")
-    resp = jsonify(data)
+    data = dict(Invalid_URL_Format="Please Enter a valid URL format like http://www.example.com")
+    resp = json.dumps(data)
     return resp
 
   #Strip http(s) and www from url
@@ -59,20 +59,24 @@ def search(URL):
     cnx.database = database_name
     cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}' '''.format(new_URL))
     Malware = cursor.fetchone()[0]
+    print Malware
   except mysql.connector.errors.Error as err:
     data = dict(Error="{}".format(err) )
-    resp = jsonify(data)
+    resp = json.dumps(data)
     return resp
+  finally:
+    cursor.close()
+    cnx.close()
 
   #cursor.execute('''SELECT COUNT(1) FROM URLlookup where malicious = '{0}'".format(new_URL)''')
   #Malware = cursor.fetchone()[0]
   if not Malware:
-    data = dict(Current_status = "Safe Browsing",Recent_activity = "No  malicious content seen Redirecting you on .... {}".format(new_URL))
-    resp= jsonify(data)
+    data = dict(Current_status = "Safe Browsing", Recent_activity = "No  malicious content seen Redirecting you on .... {}".format(new_URL))
+    resp= json.dumps(data)
     return resp 
   else:
     data = dict(Current_status = "Dangerous Site",Recent_activity = "Malicious content seen on {}".format(new_URL))
-    resp= jsonify(data)
+    resp= json.dumps(data)
     return resp
   
 if __name__ == "__main__":

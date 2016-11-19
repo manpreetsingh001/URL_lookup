@@ -40,6 +40,10 @@ The GET requests would look like this:
    - [] Dockerize  app to remove dependencies 
    - [] Bonus Tasks    
 
+**Security notes**
+  -  Regex check is done on the URL input to prevent various injections and to also save time in querying the database if the URL is not a valid URL
+  - Credentials are not hardcoded in the source code but put in a config file stored in a separate folder ( access to which should be protected )
+   
  
 
 
