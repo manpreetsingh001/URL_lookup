@@ -1,4 +1,4 @@
-# URL_lookup
+#URL_lookup
 
 Write a small web service, using the technology of your choice, that responds to GET requests where the caller passes in a URL and the service responds with some information about that URL. 
  
@@ -34,9 +34,13 @@ The GET requests would look like this:
          *www.google*                    #Invalid 
          
          *http://www.google.com/images*  #Valid
-    
-   - [] Version control plan:Going to use Tags for versoning and topic branches for adding features
-   - [] Going to write unittest for it using python mock library
+   
+  *How to run unit test*:
+   - move to test directory and make sure python mock and flask libraries are installed
+   - Run it using python
+
+   - [X] Version control plan:Going to use Tags for versoning and topic branches for adding features
+   - [X] Going to write unittest for it using python mock library
    - [] Dockerize  app to remove dependencies 
    - [] Bonus Tasks    
 
@@ -44,7 +48,17 @@ The GET requests would look like this:
   -  Regex check is done on the URL input to prevent various injections and to also save time in querying the database if the URL is not a valid URL
   - Credentials are not hardcoded in the source code but put in a config file stored in a separate folder ( access to which should be protected )
    
- 
+**Change Log**
+
+  - 0.1.0
+  
+  *Initial release version*
+
+**Author**
+
+ Urllookup service  created by Manpreet Singh
+
+
 
 
 
