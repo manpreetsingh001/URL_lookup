@@ -40,9 +40,10 @@ The GET requests would look like this:
    - Run it using python
 
    - [X] Version control plan:Going to use Tags for versoning and topic branches for adding features
-   - [X] Going to write unittest for it using python mock library
-   - [] Dockerize  app to remove dependencies 
-   - [] Bonus Tasks    
+   - [X] Write unittest for it using python mock library
+   - [] Implement Docker  and Configuration management system to remove dependencies
+   - [] Implement Caching and Load Balancing Capability to save memory & Increasing Load
+  
 
 **Security notes**
   -  Regex check is done on the URL input to prevent various injections and to also save time in querying the database if the URL is not a valid URL
